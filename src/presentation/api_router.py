@@ -19,7 +19,12 @@ from src.presentation.routers.tasks.update_task_status import router as update_t
 from src.presentation.routers.tasks.assign_task import router as assign_task_router
 from src.presentation.routers.tasks.delete_task import router as delete_task_router
 
+from src.presentation.routers.auth.login import router as auth_login_router
+
 api_router = APIRouter()
+
+# Auth
+api_router.include_router(auth_login_router, prefix="/auth", tags=["Auth"])
 
 # Users
 api_router.include_router(get_all_users_router, prefix="/users", tags=["Users"])

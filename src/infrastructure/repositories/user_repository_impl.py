@@ -14,6 +14,7 @@ def _to_entity(model: UserModel) -> User:
         id=uuid.UUID(bytes=model.id),
         username=model.username,
         email=model.email,
+        password_hash=model.password_hash,
         created_at=model.created_at,
     )
 
@@ -45,6 +46,7 @@ class UserRepositoryImpl(UserRepository):
             id=user.id.bytes,
             username=user.username,
             email=user.email,
+            password_hash=user.password_hash,
             created_at=user.created_at,
         )
         self._session.add(model)

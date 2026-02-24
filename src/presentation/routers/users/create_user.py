@@ -14,6 +14,10 @@ async def create_user(
     body: UserCreate,
     use_case: Annotated[CreateUserUseCase, Depends(get_create_user)],
 ):
-    """Create a new user."""
-    user = await use_case.execute(username=body.username, email=body.email)
+    """Register a new user."""
+    user = await use_case.execute(
+        username=body.username,
+        email=body.email,
+        password=body.password,
+    )
     return user

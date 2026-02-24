@@ -21,6 +21,7 @@ class UserModel(Base):
     id = Column(BINARY(16), primary_key=True, default=generate_uuid_bytes)
     username = Column(String(50), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
+    password_hash = Column(String(255), nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
 
     memberships = relationship("ProjectMemberModel", back_populates="user", cascade="all, delete")

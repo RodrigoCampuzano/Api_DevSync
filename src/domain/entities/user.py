@@ -8,4 +8,5 @@ class User:
     id: UUID
     username: str
     email: str
+    password_hash: str
     created_at: datetime

@@ -13,6 +13,7 @@ from src.domain.use_cases.users.create_user import CreateUserUseCase
 from src.domain.use_cases.users.get_user_by_id import GetUserByIdUseCase
 from src.domain.use_cases.users.get_all_users import GetAllUsersUseCase
 from src.domain.use_cases.users.delete_user import DeleteUserUseCase
+from src.domain.use_cases.users.authenticate_user import AuthenticateUserUseCase
 
 # ── Use Cases: Projects ───────────────────────────────────────────────────────
 from src.domain.use_cases.projects.create_project import CreateProjectUseCase
@@ -44,6 +45,10 @@ def get_all_users(db: DbSession) -> GetAllUsersUseCase:
 
 def get_delete_user(db: DbSession) -> DeleteUserUseCase:
     return DeleteUserUseCase(UserRepositoryImpl(db))
+
+
+def get_authenticate_user(db: DbSession) -> AuthenticateUserUseCase:
+    return AuthenticateUserUseCase(UserRepositoryImpl(db))
 
 # Projects
 def get_create_project(db: DbSession) -> CreateProjectUseCase:
