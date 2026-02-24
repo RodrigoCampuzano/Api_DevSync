@@ -19,8 +19,6 @@ from src.presentation.routers.tasks.update_task_status import router as update_t
 from src.presentation.routers.tasks.assign_task import router as assign_task_router
 from src.presentation.routers.tasks.delete_task import router as delete_task_router
 
-from src.presentation.websockets.board_ws import router as ws_router
-
 api_router = APIRouter()
 
 # Users
@@ -44,6 +42,3 @@ api_router.include_router(get_task_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(update_task_status_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(assign_task_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(delete_task_router, prefix="/tasks", tags=["Tasks"])
-
-# WebSockets
-api_router.include_router(ws_router, tags=["WebSocket"])

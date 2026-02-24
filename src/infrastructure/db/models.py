@@ -1,7 +1,7 @@
 import uuid
 
 from sqlalchemy import (
-    BINARY, Column, Enum, ForeignKey, Index, Integer, String, Text, Timestamp
+    BINARY, Column, Enum, ForeignKey, Index, Integer, String, Text, TIMESTAMP
 )
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy.sql import func
@@ -21,7 +21,7 @@ class UserModel(Base):
     id = Column(BINARY(16), primary_key=True, default=generate_uuid_bytes)
     username = Column(String(50), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
-    created_at = Column(Timestamp, server_default=func.now())
+    created_at = Column(TIMESTAMP, server_default=func.now())
 
     memberships = relationship("ProjectMemberModel", back_populates="user", cascade="all, delete")
     tasks_assigned = relationship("TaskModel", foreign_keys="TaskModel.assigned_to", back_populates="assignee")
@@ -34,7 +34,7 @@ class ProjectModel(Base):
     id = Column(BINARY(16), primary_key=True, default=generate_uuid_bytes)
     name = Column(String(100), nullable=False)
     description = Column(Text, nullable=True)
-    created_at = Column(Timestamp, server_default=func.now())
+    created_at = Column(TIMESTAMP, server_default=func.now())
 
     members = relationship("ProjectMemberModel", back_populates="project", cascade="all, delete")
     tasks = relationship("TaskModel", back_populates="project", cascade="all, delete")
@@ -46,7 +46,7 @@ class ProjectMemberModel(Base):
     project_id = Column(BINARY(16), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True)
     user_id = Column(BINARY(16), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
     role = Column(Enum("ADMIN", "DEVELOPER"), default="DEVELOPER")
-    joined_at = Column(Timestamp, server_default=func.now())
+    joined_at = Column(TIMESTAMP, server_default=func.now())
 
     project = relationship("ProjectModel", back_populates="members")
     user = relationship("UserModel", back_populates="memberships")
@@ -63,8 +63,8 @@ class TaskModel(Base):
     assigned_to = Column(BINARY(16), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     created_by = Column(BINARY(16), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     version = Column(Integer, default=1, nullable=False)
-    updated_at = Column(Timestamp, server_default=func.now(), onupdate=func.now())
-    created_at = Column(Timestamp, server_default=func.now())
+    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+    created_at = Column(TIMESTAMP, server_default=func.now())
 
     project = relationship("ProjectModel", back_populates="tasks")
     assignee = relationship("UserModel", foreign_keys=[assigned_to], back_populates="tasks_assigned")
