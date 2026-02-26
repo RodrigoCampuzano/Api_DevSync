@@ -109,3 +109,41 @@ class TaskRepositoryImpl(TaskRepository):
         await self._session.delete(model)
         await self._session.commit()
         return True
+
+    async def update(
+        self,
+        task_id: UUID,
+        expected_version: int,
+        title: str | None = None,
+        description: str | None = None,
+        status: str | None = None,
+        assigned_to: UUID | None = None,
+    ) -> Task:
+        result = await self._session.execute(
+            select(TaskModel).where(TaskModel.id == task_id.bytes)
+        )
+        model = result.scalar_one_or_none()
+        if not model:
+            raise HTTPException(status_code=404, detail="Task not found")
+
+        if model.version != expected_version:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    f"Version conflict: expected {expected_version} "
+                    f"but current is {model.version}. Refresh and retry."
+                ),
+            )
+
+        if title is not None:
+            model.title = title
+        if description is not None:
+            model.description = description
+        if status is not None:
+            model.status = status
+        if assigned_to is not None:
+            model.assigned_to = assigned_to.bytes
+        model.version = model.version + 1
+        await self._session.commit()
+        await self._session.refresh(model)
+        return _to_entity(model)

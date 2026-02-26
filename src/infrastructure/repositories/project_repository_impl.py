@@ -84,3 +84,19 @@ class ProjectRepositoryImpl(ProjectRepository):
         await self._session.delete(model)
         await self._session.commit()
         return True
+
+    async def update(self, project_id: UUID, name: str | None, description: str | None) -> Project:
+        result = await self._session.execute(
+            select(ProjectModel).where(ProjectModel.id == project_id.bytes)
+        )
+        model = result.scalar_one_or_none()
+        if not model:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="Project not found")
+        if name is not None:
+            model.name = name
+        if description is not None:
+            model.description = description
+        await self._session.commit()
+        await self._session.refresh(model)
+        return _to_project_entity(model)

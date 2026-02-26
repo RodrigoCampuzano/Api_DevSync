@@ -30,3 +30,7 @@ class ProjectRepository(ABC):
     @abstractmethod
     async def delete(self, project_id: UUID) -> bool:
         ...
+
+    @abstractmethod
+    async def update(self, project_id: UUID, name: str | None, description: str | None) -> Project:
+        ...

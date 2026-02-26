@@ -37,3 +37,11 @@ class UpdateTaskStatusRequest(BaseModel):
 
 class AssignTaskRequest(BaseModel):
     user_id: UUID | None = None  # None = unassign
+
+
+class TaskUpdate(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    status: TaskStatus | None = None
+    assigned_to: UUID | None = None
+    version: int  # Required for Optimistic Concurrency Control

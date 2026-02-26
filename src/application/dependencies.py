@@ -22,6 +22,7 @@ from src.domain.use_cases.projects.get_all_projects import GetAllProjectsUseCase
 from src.domain.use_cases.projects.add_project_member import AddProjectMemberUseCase
 from src.domain.use_cases.projects.get_project_members import GetProjectMembersUseCase
 from src.domain.use_cases.projects.delete_project import DeleteProjectUseCase
+from src.domain.use_cases.projects.update_project import UpdateProjectUseCase
 
 # ── Use Cases: Tasks ──────────────────────────────────────────────────────────
 from src.domain.use_cases.tasks.create_task import CreateTaskUseCase
@@ -30,6 +31,7 @@ from src.domain.use_cases.tasks.get_tasks_by_project import GetTasksByProjectUse
 from src.domain.use_cases.tasks.update_task_status import UpdateTaskStatusUseCase
 from src.domain.use_cases.tasks.assign_task import AssignTaskUseCase
 from src.domain.use_cases.tasks.delete_task import DeleteTaskUseCase
+from src.domain.use_cases.tasks.update_task import UpdateTaskUseCase
 
 DbSession = Annotated[AsyncSession, Depends(get_db)]
 
@@ -69,6 +71,9 @@ def get_project_members(db: DbSession) -> GetProjectMembersUseCase:
 def get_delete_project(db: DbSession) -> DeleteProjectUseCase:
     return DeleteProjectUseCase(ProjectRepositoryImpl(db))
 
+def get_update_project(db: DbSession) -> UpdateProjectUseCase:
+    return UpdateProjectUseCase(ProjectRepositoryImpl(db))
+
 # Tasks
 def get_create_task(db: DbSession) -> CreateTaskUseCase:
     return CreateTaskUseCase(TaskRepositoryImpl(db))
@@ -87,3 +92,6 @@ def get_assign_task(db: DbSession) -> AssignTaskUseCase:
 
 def get_delete_task(db: DbSession) -> DeleteTaskUseCase:
     return DeleteTaskUseCase(TaskRepositoryImpl(db))
+
+def get_update_task(db: DbSession) -> UpdateTaskUseCase:
+    return UpdateTaskUseCase(TaskRepositoryImpl(db))

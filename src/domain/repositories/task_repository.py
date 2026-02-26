@@ -30,3 +30,15 @@ class TaskRepository(ABC):
     @abstractmethod
     async def delete(self, task_id: UUID) -> bool:
         ...
+
+    @abstractmethod
+    async def update(
+        self,
+        task_id: UUID,
+        expected_version: int,
+        title: str | None = None,
+        description: str | None = None,
+        status: str | None = None,
+        assigned_to: UUID | None = None,
+    ) -> Task:
+        ...

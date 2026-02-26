@@ -11,6 +11,7 @@ from src.presentation.routers.projects.get_all_projects import router as get_all
 from src.presentation.routers.projects.add_member import router as add_member_router
 from src.presentation.routers.projects.get_members import router as get_members_router
 from src.presentation.routers.projects.delete_project import router as delete_project_router
+from src.presentation.routers.projects.update_project import router as update_project_router
 
 from src.presentation.routers.tasks.create_task import router as create_task_router
 from src.presentation.routers.tasks.get_task import router as get_task_router
@@ -18,6 +19,7 @@ from src.presentation.routers.tasks.get_tasks_by_project import router as get_ta
 from src.presentation.routers.tasks.update_task_status import router as update_task_status_router
 from src.presentation.routers.tasks.assign_task import router as assign_task_router
 from src.presentation.routers.tasks.delete_task import router as delete_task_router
+from src.presentation.routers.tasks.update_task import router as update_task_router
 
 from src.presentation.routers.auth.login import router as auth_login_router
 
@@ -39,6 +41,7 @@ api_router.include_router(get_project_router, prefix="/projects", tags=["Project
 api_router.include_router(get_members_router, prefix="/projects", tags=["Projects"])
 api_router.include_router(add_member_router, prefix="/projects", tags=["Projects"])
 api_router.include_router(delete_project_router, prefix="/projects", tags=["Projects"])
+api_router.include_router(update_project_router, prefix="/projects", tags=["Projects"])
 
 # Tasks
 api_router.include_router(get_tasks_by_project_router, prefix="/tasks", tags=["Tasks"])
@@ -47,3 +50,4 @@ api_router.include_router(get_task_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(update_task_status_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(assign_task_router, prefix="/tasks", tags=["Tasks"])
 api_router.include_router(delete_task_router, prefix="/tasks", tags=["Tasks"])
+api_router.include_router(update_task_router, prefix="/tasks", tags=["Tasks"])
